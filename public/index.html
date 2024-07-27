@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <title>Chat Server Selection</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f0f0f0; }
+    h1 { margin-bottom: 20px; }
+    .container { text-align: center; }
+    input, button, select { padding: 10px; margin: 5px; }
+    button { background: rgb(130, 224, 255); border: none; cursor: pointer; }
+    button:hover { background: rgb(100, 200, 255); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Chat Application</h1>
+    <div id="selection-form">
+      <label for="username">Enter your username:</label>
+      <input id="username" type="text" placeholder="Username" />
+      <br/>
+      <label for="room-select">Select a server:</label>
+      <select id="room-select">
+        <option value="1">Server 1</option>
+        <option value="2">Server 2</option>
+        <option value="3">Server 3</option>
+      </select>
+      <button id="start-chat">Start Chat</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+
+    document.getElementById('start-chat').addEventListener('click', function() {
+      var username = document.getElementById('username').value;
+      var roomId = document.getElementById('room-select').value;
+
+      if (username.trim() === '') {
+        alert('Please enter a username.');
+        return;
+      }
+
+      if (roomId) {
+        // Redirect to the selected server page with the username as a query parameter
+        window.location.href = '/server/' + roomId + '?username=' + encodeURIComponent(username);
+      }
+    });
+  </script>
+</body>
+</html>
